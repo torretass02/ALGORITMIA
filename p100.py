@@ -1,9 +1,11 @@
+'Hugo Torres Martínez y Luis Rodríguez Moreno'
+
 'NUESTRA FORMA'
 from heapq import heapify
 from attr import has
 import numpy as np
 
-def matrix_multiplication(m1: np.ndarray, m2 : np.ndarray) :
+def matrix_multiplication(m1: np.ndarray, m2 : np.ndarray)->np.ndarray:
     if len (m1[0]) == len (m2): 
         m3 = []
         for i in range (len (m1)):
@@ -22,7 +24,7 @@ def matrix_multiplication(m1: np.ndarray, m2 : np.ndarray) :
 
 'BUSQUEDA BINARIA CON RECURSION'
 
-def rec_bb(t: list, f: int, l: int, key: int):
+def rec_bb(t: list, f: int, l: int, key: int)->int:
     if f>l:
         return
     if f == l:
@@ -43,7 +45,7 @@ def rec_bb(t: list, f: int, l: int, key: int):
 'BUSQUEDA BINARIA SIN RECURSION'
 
 from traitlets import List
-def bb(t: List, f: int, l: int, key: int):
+def bb(t: List, f: int, l: int, key: int)->int:
 
     while f <= l:
         mid = (f + l)//2
@@ -126,16 +128,8 @@ def pq_remove(h: np.ndarray)-> tuple([int, np.ndarray]):
 
 def select_min_heap(h: np.ndarray, k: int)-> int:
 
-    aux = pq_ini()
-
-    aux = np.multiply(h, -1)
+    h = create_min_heap(h)
+    for i in range(k-1):
+        e, h = pq_remove(h)
     
-    aux = create_min_heap(aux)
-
-    aux = np.multiply(aux, -1)
-    
-    aux = create_min_heap(aux)
-
-    print(f'HEAP = {aux}')
-
-    return int(aux[k])
+    return h[0]

@@ -103,9 +103,13 @@ def main(t_size: int):
     
         print(sorted(l))
         
-        for k in range(1, min(t_size, 5)):
-            val = p1.select_min_heap(l, k)
-            print('pos', k, '\tval', val)
+        
+        val = p1.select_min_heap(l, 1)
+        print('pos', 1, '\tval', val)
+        val = p1.select_min_heap(l, 8)
+        print('pos', 8, '\tval', val)
+        val = p1.select_min_heap(l, 9)
+        print('pos', 9, '\tval', val)
         
 ###############################################################################################
 if __name__ == '__main__':
