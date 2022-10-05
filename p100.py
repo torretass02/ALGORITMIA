@@ -125,3 +125,17 @@ def pq_remove(h: np.ndarray)-> tuple([int, np.ndarray]):
 'SELECT MIN HEAP'
 
 def select_min_heap(h: np.ndarray, k: int)-> int:
+
+    aux = pq_ini()
+
+    aux = np.multiply(h, -1)
+    
+    aux = create_min_heap(aux)
+
+    aux = np.multiply(aux, -1)
+    
+    aux = create_min_heap(aux)
+
+    print(f'HEAP = {aux}')
+
+    return int(aux[k])
