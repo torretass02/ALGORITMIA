@@ -6,7 +6,7 @@ import textwrap
 
 import numpy as np
 
-import p100 as p1
+import p104 as p1
   
 ####################################### main
 def main(t_size: int):
@@ -138,7 +138,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     if len(sys.argv) > 1:
-        import p100 as p1 
+        import p104 as p1 
             
         main(args.size)
     
