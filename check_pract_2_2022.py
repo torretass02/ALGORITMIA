@@ -37,7 +37,7 @@ def main():
     
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
     
-    # check cc
+    """# check cc
     print(30*'_' + "Checking CCs")
     # lo que siguen son distintos grafos; usar cualquiera
     g = [(1, 2), (1, 3), (0, 4), (4, 5)]
@@ -47,7 +47,7 @@ def main():
     g = [(0, 2), (1, 3), (2, 3), (2, 4), (3, 4), (5, 6), (5, 7), (6, 8)]
     g = [(0, 12), (10, 0), (7, 12), (1, 9), (3, 8), (3, 9), (11, 6), (2, 5), (4, 5), (0, 2)]
     d_cc = p2.ccs(13, g)
-    print(d_cc)
+    print(d_cc)"""
     
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
     
@@ -160,7 +160,7 @@ if __name__ == '__main__':
                 sys.exit("file {0:s} not found".format(f_path))
         
         else:
-            import p200 as p2
+            import p204 as p2
             
         main()
     
