@@ -1,5 +1,5 @@
 import numpy as np
-import itertools
+from itertools import permutations
 from typing import List, Dict, Callable, Iterable
 
 
@@ -100,3 +100,30 @@ def repeated_greedy_tsp(dist_m: np.ndarray) -> list:
     index = longitudes.index(min)
 
     return circuitos[index]
+
+def exhaustive_tsp(dist_m: np.ndarray)-> list:
+  c = []
+  l = []
+  h = []
+
+  for i in range(len(dist_m)):
+    c.append(i)
+
+  p = list(permutations(c))
+
+  for i in p:
+    l.append(list(i))
+
+  for i in range(len(l)):
+    l[i].append(l[i][0])
+
+  min = len_circuit(l[0], dist_m)
+  h = list(np.copy(l[0]))
+  
+  for i in l[1:]:
+    aux = len_circuit(i, dist_m)
+    if aux < min:
+      min = aux
+      h = list(np.copy(i))
+
+  return h
