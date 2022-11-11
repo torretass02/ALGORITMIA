@@ -209,7 +209,7 @@ def repeated_greedy_tsp(dist_m: np.ndarray) -> list:
         Args:
             dist_m: Matriz de distancias de la que se quieren obtener los circuitos.
         Return:
-            Longitud del circuito dado por argumento. 
+            Circuito con menos longitud. 
     """
 
     circuitos = []
@@ -229,6 +229,13 @@ def repeated_greedy_tsp(dist_m: np.ndarray) -> list:
 
 
 def exhaustive_tsp(dist_m: np.ndarray) -> list:
+    """ Función que genera todos los circuitos posibles mediante el uso de permutations, para calcular el que menos longitud tenga. Más efectivo para matrices pequeñas.
+        Args:
+            dist_m: Matriz de distancias de la que se quieren obtener los circuitos.
+        Return:
+            Circuito con menos longitud. 
+    """
+
     c = []
     l = []
     h = []
