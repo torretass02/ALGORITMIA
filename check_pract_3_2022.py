@@ -31,13 +31,15 @@ def main(size, shift):
         
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
     
+    """
     print(30*'_' + "Checking QSel5")
     for k in range(size + 2 * shift):
-        print("qsel5 {0:d}: {1:s}".format(k-shift, str(p3.qsel5_nr(t, k-shift))))
+        print("qsel5 {0:d}: {1:s}".format(k-shift,  str(p3.qsel5_nr(t, k-shift))))
     
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
+    """
     
-    
+
     print(30*'_' + "Checking QSort5")
     print(p3.qsort_5(t).astype(int))
     
@@ -58,10 +60,10 @@ def main(size, shift):
     print("max_commmon_subsequence:\n", p3.max_common_subsequence(strng_1, strng_2))
     
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
-    
+    """
     print(30*'_' + "Checking matrix mult")
     l_dims = [50, 10, 40, 30, 5]
-    print(p3.min_mult_matrix(l_dims))
+    print(p3.min_mult_matrix(l_dims))"""
 
     
     

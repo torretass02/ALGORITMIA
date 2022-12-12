@@ -54,59 +54,95 @@ def split_pivot(t: np.ndarray, mid: int)-> Tuple[np.ndarray, int, np.ndarray]:
     return (t_l, mid, t_r)
 
 def pivot5(t: np.ndarray)-> int:
-    n_group = len(t) // 5
-    index_median = 5 // 2 
     cutoff = 5
-    sublists =  [t[j:j+ 5] for j in range(0, len(t), 5)][:n_group]
+    n_group = len(t) // cutoff
+    index_median = cutoff // 2 
+    sublists =  [t[j:j+ cutoff] for j in range(0, len(t), cutoff)][:n_group]
     medians = [sorted(sub)[index_median] for sub in sublists]
 
     if len(medians) <= cutoff:
         pivot = sorted(medians)[len(medians)//2]
     else:
-        pivot = QSelect5 (medians, len(medians)//2)
+        pivot = qsel5_nr (medians, len(medians)//2)         
         
     return pivot
 
-def QSelect5 (data:List, k:int) -> Union[int, None]:
-    cutoff = 5
-    
-    if len(data) <= cutoff:
-        return sorted(data)[k-1]
-    
-    pivot_value = pivot5(data)
-    
-    s_1, pivot_value, s_2 = split_pivot(data, pivot_value)
 
-    pivot_index = len(s_1)
-
-    if (k-1) == pivot_index  :
-        return pivot_value
-    elif (k-1) < pivot_index :
-        return QSelect5 (s_1, k)
-    else:
-        return QSelect5 (s_2, k-pivot_index-1)
-
-def qsel5_nr (data:List, k:int) -> Union[int, None]:
-    cutoff = 5
-
-    if len(data) == 1 and k == 0:
-        return data[0]
+def qsel5_nr (t:np.ndarray, k:int) -> Union[int, None]:
     
-    if k<0 or k>len(data)-1:
+    if len(t)==0:
         return None
+    while True:
+        pivot_v = pivot5(t)
+        if pivot_v == None:
+            return None
+        
+        s_1, piv, s_2 = split_pivot(t, pivot_v)
 
-    if len(data) <= cutoff:
-        return sorted(data)[k-1]
-    else:
-        pivot_value = pivot5(data)
-    
-        s_1, pivot_value, s_2 = split_pivot(data, pivot_value)
-
-        pivot_index = len(s_1)
-
-        if (k-1) == pivot_index  :
-            return pivot_value
-        elif (k-1) < pivot_index :
-            return qsel5_nr (s_1, k)
+        if k == len(s_1) :
+            return piv
+        elif k < len(s_1) :
+           t = s_1
         else:
-            return qsel5_nr (s_2, k-pivot_index-1)
+            t = s_2
+            k = k - len(s_1) - 1
+
+
+def edit_distance(str_1: str, str_2: str)-> int:
+    D = np.zeros((len(str_1)+1, len(str_2)+1), dtype=int)
+    D[0, 1:] = range(1, len(str_2)+1)
+    D[1:, 0] = range(1, len(str_1)+1)
+    
+    for i in range(1, len(str_1)+1):
+        for j in range(1, len(str_2)+1):
+            if (str_1[i-1] == str_2[j-1]):
+                D[i,j] = D[i-1, j-1]
+            else :
+                D[i, j] = min(D[i-1, j-1]+1, D[i-1, j]+1, D[i, j-1]+1)
+    
+    return D[-1, -1]
+
+
+def max_subsequence_length(str_1: str, str_2: str)-> int:
+    e = np.zeros((len(str_1)+1, len(str_2)+1), dtype=int)
+    
+    for i in range(1, len(str_1)+1):
+        for j in range(1, len(str_2)+1):
+            if (str_1[i-1] == str_2[j-1]):
+                e[i,j] = 1 + e[i-1, j-1]    
+            else :
+                e[i, j] = max(e[i-1, j], e[i, j-1])
+    return e[-1,-1]
+
+
+def qsort_5(t:np.ndarray) -> np.ndarray:  
+    if len(t)<= 5:
+        return np.sort(t)
+    else:
+        m = pivot5(t)
+        l, piv, r = split_pivot(t, m)
+        return np.concatenate((qsort_5(l), np.array([piv]), qsort_5(r)))
+    
+def max_common_subsequence(x:str, y:str)->str:
+    m = len(x)
+    n = len(y)
+    counter = [[0]*(n+1) for q in range(m+1)]
+    longest = 0
+    lcs_set = set()
+    for i in range(m):
+        for j in range(n):
+            if x[i] == y[j]:
+                c = counter[i][j] + 1
+                counter[i+1][j+1] = c
+                if c > longest:
+                    lcs_set = set()
+                    longest = c
+                    lcs_set.add(x[i-c+1:i+1])
+                elif c == longest:
+                    lcs_set.add(x[i-c+1:i+1])
+
+    return lcs_set
+
+
+
+    
