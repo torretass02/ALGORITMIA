@@ -31,14 +31,11 @@ def main(size, shift):
         
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
     
-    """
     print(30*'_' + "Checking QSel5")
     for k in range(size + 2 * shift):
         print("qsel5 {0:d}: {1:s}".format(k-shift,  str(p3.qsel5_nr(t, k-shift))))
     
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
-    """
-    
 
     print(30*'_' + "Checking QSort5")
     print(p3.qsort_5(t).astype(int))

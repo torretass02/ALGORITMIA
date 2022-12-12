@@ -24,8 +24,6 @@ def qsel(t: np.ndarray, k: int)-> Union[int, None]:
     else:
         return qsel(t_r, k-m-1)
     
-
-
 def qsel_nr(t: np.ndarray, k: int)-> Union[int, None]:
     if(k < 0 or t is None):
         return None
@@ -54,26 +52,20 @@ def split_pivot(t: np.ndarray, mid: int)-> Tuple[np.ndarray, int, np.ndarray]:
     return (t_l, mid, t_r)
 
 def pivot5(t: np.ndarray)-> int:
-    cutoff = 5
-    n_group = len(t) // cutoff
-    index_median = cutoff // 2 
-    sublists =  [t[j:j+ cutoff] for j in range(0, len(t), cutoff)][:n_group]
-    medians = [sorted(sub)[index_median] for sub in sublists]
-
-    if len(medians) <= cutoff:
-        pivot = sorted(medians)[len(medians)//2]
+    if len(t)>0 and len(t)<=5:
+        return int(np.median(t))
+    elif len(t)==0:
+        return None
     else:
-        pivot = qsel5_nr (medians, len(medians)//2)         
-        
-    return pivot
-
+        return int(np.median([pivot5(t[i:i+5]) for i in range(0, len(t), 5)]))
 
 def qsel5_nr (t:np.ndarray, k:int) -> Union[int, None]:
     
-    if len(t)==0:
+    if len(t)==0  or k>len(t)-1 or k<0:
         return None
     while True:
         pivot_v = pivot5(t)
+
         if pivot_v == None:
             return None
         
@@ -86,7 +78,6 @@ def qsel5_nr (t:np.ndarray, k:int) -> Union[int, None]:
         else:
             t = s_2
             k = k - len(s_1) - 1
-
 
 def edit_distance(str_1: str, str_2: str)-> int:
     D = np.zeros((len(str_1)+1, len(str_2)+1), dtype=int)
@@ -102,7 +93,6 @@ def edit_distance(str_1: str, str_2: str)-> int:
     
     return D[-1, -1]
 
-
 def max_subsequence_length(str_1: str, str_2: str)-> int:
     e = np.zeros((len(str_1)+1, len(str_2)+1), dtype=int)
     
@@ -114,7 +104,6 @@ def max_subsequence_length(str_1: str, str_2: str)-> int:
                 e[i, j] = max(e[i-1, j], e[i, j-1])
     return e[-1,-1]
 
-
 def qsort_5(t:np.ndarray) -> np.ndarray:  
     if len(t)<= 5:
         return np.sort(t)
@@ -124,25 +113,40 @@ def qsort_5(t:np.ndarray) -> np.ndarray:
         return np.concatenate((qsort_5(l), np.array([piv]), qsort_5(r)))
     
 def max_common_subsequence(x:str, y:str)->str:
-    m = len(x)
-    n = len(y)
-    counter = [[0]*(n+1) for q in range(m+1)]
-    longest = 0
-    lcs_set = set()
-    for i in range(m):
-        for j in range(n):
-            if x[i] == y[j]:
-                c = counter[i][j] + 1
-                counter[i+1][j+1] = c
-                if c > longest:
-                    lcs_set = set()
-                    longest = c
-                    lcs_set.add(x[i-c+1:i+1])
-                elif c == longest:
-                    lcs_set.add(x[i-c+1:i+1])
+    e = np.zeros((len(x)+1, len(y)+1), dtype=int)
+    b = np.empty((len(x)+1, len(y)+1), dtype=str)
+    
+    for i in range(1, len(x)+1):
+        for j in range(1, len(y)+1):
+            if (x[i-1] == y[j-1]):
+                e[i,j] = 1 + e[i-1, j-1]
+                b[i,j] = 'D'
+                  
+            else :
+                inputlist = (e[i-1, j], e[i, j-1])
+                max_value = max(inputlist)
+                max_index=inputlist.index(max_value)
+                e[i, j], index = max_value, max_index
+                b[i, j] = 'L' if index else 'U'
 
-    return lcs_set
 
+    def LCS_print (B:np.array, x:str, i:int, j:int, string:str)->str:
+        if i==0 or j==0:
+            string = string[::-1]
+            print(string)
+            return string
+        if B[i, j] == 'D':
+            string = string + x[i-1]
+            LCS_print (B, x, i-1, j-1, string)
+            string = string + x[i-1]
+        elif B[i, j] == 'U':
+            LCS_print (B, x, i-1, j, string)
+        elif B[i, j] == 'L':
+            LCS_print (B, x, i, j-1, string)
+
+    vacio = ""
+
+    return LCS_print(b, x, len(x), len(y), vacio)
 
 
     
