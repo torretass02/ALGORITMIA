@@ -112,7 +112,7 @@ def qsort_5(t:np.ndarray) -> np.ndarray:
         l, piv, r = split_pivot(t, m)
         return np.concatenate((qsort_5(l), np.array([piv]), qsort_5(r)))
     
-def max_common_subsequence(x:str, y:str)->str:
+def max_common_subsequence (x:str, y:str)->str:
     e = np.zeros((len(x)+1, len(y)+1), dtype=int)
     b = np.empty((len(x)+1, len(y)+1), dtype=str)
     
@@ -133,19 +133,16 @@ def max_common_subsequence(x:str, y:str)->str:
     def LCS_print (B:np.array, x:str, i:int, j:int, string:str)->str:
         if i==0 or j==0:
             string = string[::-1]
-            print(string)
             return string
         if B[i, j] == 'D':
             string = string + x[i-1]
-            LCS_print (B, x, i-1, j-1, string)
-            string = string + x[i-1]
+            return LCS_print (B, x, i-1, j-1, string)
         elif B[i, j] == 'U':
-            LCS_print (B, x, i-1, j, string)
+            return LCS_print (B, x, i-1, j, string)
         elif B[i, j] == 'L':
-            LCS_print (B, x, i, j-1, string)
+            return LCS_print (B, x, i, j-1, string)
 
-    vacio = ""
-
+    vacio = "" 
     return LCS_print(b, x, len(x), len(y), vacio)
 
 

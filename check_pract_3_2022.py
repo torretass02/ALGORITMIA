@@ -46,8 +46,8 @@ def main(size, shift):
     # check PD
     print(30*'_' + "Checking edit distance")
     strng_1, strng_2 = 'bananas', 'bahamas'
-    strng_1, strng_2 = 'algoritmos', 'logaritmos'
-    strng_1, strng_2 = 5*'a', 'b' + 4*'a'
+    """ strng_1, strng_2 = 'algoritmos', 'logaritmos'
+    strng_1, strng_2 = 5*'a', 'b' + 4*'a' """
     print("edit_distance:\t", p3.edit_distance(strng_1, strng_2))
     
     _ = input("\npulsar Intro para continuar " + 20*'.' + "\n")
