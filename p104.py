@@ -265,3 +265,27 @@ def select_min_heap(h: np.ndarray, k: int) -> int:
         n = minheap_extract(m)
         j+=1
     return n
+
+
+
+def max_heapify(h: np.ndarray, i: int):
+    while 2 * i + 1 < len(h):
+        n_i = i
+
+        if h[i] < h[2 * i + 1]:
+            n_i = 2 * i + 1
+        if 2 * i + 2 < len(h) and h[i] < h[2 * i + 2] and h[2 * i + 2] > h[n_i]:
+            n_i = 2 * i + 2
+
+        if n_i > i:
+            h[i], h[n_i] = h[n_i], h[i]
+            i = n_i
+        else:
+            return
+
+def create_max_heap(h: np.ndarray):
+    j = ((len(h) - 1) - 1) // 2
+    while j > -1:
+        max_heapify(h, j)
+        j -= 1
+    return h
