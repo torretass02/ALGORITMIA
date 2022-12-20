@@ -1,11 +1,11 @@
 'Hugo Torres Martínez y Luis Rodríguez Moreno'
 
 import numpy as np
+import random
 from itertools import permutations
 from typing import List, Dict, Callable, Iterable
 
 'INIT CD'
-
 
 def init_cd(n: int) -> np.ndarray:
     """
@@ -135,20 +135,21 @@ def ccs(n: int, l: list) -> dict:
 'MATRIZ DE DISTANCIAS'
 
 
+
 def dist_matrix(n_nodes: int, w_max=10) -> np.ndarray:
-    """
-        Función que genera una matriz de distancias de n_nodes nodos con distancias máximas w_max.
-        Args:
-            n_nodes: Número de nodos de la matriz.
-            w_max: Valor máximo que puede tener la distancia de cada nodo de la matriz.
-        Return:
-            Matriz de distancias.
-    """
+  matriz = []
+  for i in range(n_nodes):
+    fila = []
+    for j in range(n_nodes):
+      fila.append(0)
+    matriz.append(fila)
 
-    h = np.random.randint(w_max, size=(n_nodes, n_nodes))
-    np.fill_diagonal(h, 0)
-
-    return h
+  for i in range(n_nodes):
+    for j in range(i+1, n_nodes):
+      valor = random.randint(0, w_max)
+      matriz[i][j] = valor
+      matriz[j][i] = valor
+  return np.array(matriz)
 
 
 'GREEDY TSP'
