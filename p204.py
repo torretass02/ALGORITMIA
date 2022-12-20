@@ -212,18 +212,12 @@ def repeated_greedy_tsp(dist_m: np.ndarray) -> list:
         Return:
             Circuito con menos longitud. 
     """
-
-    circuitos = []
-    longitudes = []
-
+    
+    lens = []
     for i in range(len(dist_m)):
-        circuitos.append(greedy_tsp(dist_m, i))
-        longitudes.append(len_circuit(circuitos[i], dist_m))
+        lens.append(len_circuit(greedy_tsp(dist_m, i), dist_m))
 
-    min = np.amin(longitudes)
-    index = longitudes.index(min)
-
-    return circuitos[index]
+    return greedy_tsp(dist_m, np.argmin(lens))
 
 
 'EXHAUSTIVE TSP'
