@@ -236,6 +236,13 @@ def pq_remove(h: np.ndarray) -> tuple([int, np.ndarray]):
 'SELECT MIN HEAP'
 
 
+def minheap_extract(h:list):
+    root = h[0]
+    h[0] =  h[len(h)-1]
+    
+    h.pop()
+    return root
+
 def select_min_heap(h: np.ndarray, k: int) -> int:
     """
         Realiza una operación que consiste en encontrar el valor que ocuparía la posición "k" si "h" se tratase de un array ordenado.
@@ -249,8 +256,12 @@ def select_min_heap(h: np.ndarray, k: int) -> int:
 
 
     """
-    h = create_min_heap(h)
-    for i in range(k - 1):
-        e, h = pq_remove(h)
-
-    return h[0]
+    m = []
+    for i in h:
+        m.append(i)
+    j = 0
+    while j<k:
+        create_min_heap(m)
+        n = minheap_extract(m)
+        j+=1
+    return n
