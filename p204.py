@@ -212,7 +212,7 @@ def repeated_greedy_tsp(dist_m: np.ndarray) -> list:
         Return:
             Circuito con menos longitud. 
     """
-    
+
     lens = []
     for i in range(len(dist_m)):
         lens.append(len_circuit(greedy_tsp(dist_m, i), dist_m))
@@ -256,3 +256,36 @@ def exhaustive_tsp(dist_m: np.ndarray) -> list:
             h = list(np.copy(i))
 
     return h
+
+"""
+def exhaustive_tsp(dist_m: np.ndarray) -> list:
+    c = []
+    l = []
+    h = []
+
+    for i in range(len(dist_m)):
+        c.append(i)
+
+    if math.factorial(len(c)) < 10**7:
+
+        p = list(permutations(c))
+
+        for i in p:
+            l.append(list(i))
+
+        for i in range(len(l)):
+            l[i].append(l[i][0])
+
+        min = len_circuit(l[0], dist_m)
+        h = list(np.copy(l[0]))
+
+        for i in l[1:]:
+            aux = len_circuit(i, dist_m)
+            if aux < min:
+                min = aux
+                h = list(np.copy(i))
+
+        return h
+    else:
+        print("Tiene que haber menos de 10⁷ caminos")
+"""
